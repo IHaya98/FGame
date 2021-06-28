@@ -2,8 +2,10 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:fgame/components/backyard.dart';
 import 'package:fgame/components/characters/character.dart';
+import 'package:fgame/components/characters/dog.dart';
 import 'package:fgame/components/characters/pirate-woman.dart';
 import 'package:fgame/components/characters/samurai.dart';
+import 'package:fgame/components/characters/white-hair-man.dart';
 import 'package:fgame/controllers/generater.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
@@ -32,14 +34,20 @@ class FGame extends Game {
   }
 
   void generateCharacter() {
-    double x = rnd.nextDouble() * (screenSize.width - tileSize * 2.025);
+    double x = (screenSize.width - tileSize * 1.50);
     double y = (screenSize.height - tileSize * 1.50);
-    switch (rnd.nextInt(2)) {
+    switch (rnd.nextInt(4)) {
       case 0:
-        characters.add(Samurai(this, x, y));
+        characters.add(new Samurai(this, x, y));
         break;
       case 1:
-        characters.add(PirateWoman(this, x, y));
+        characters.add(new PirateWoman(this, x, y));
+        break;
+      case 2:
+        characters.add(new Dog(this, x, y));
+        break;
+      case 3:
+        characters.add(new WhiteHairMan(this, x, y));
         break;
     }
   }

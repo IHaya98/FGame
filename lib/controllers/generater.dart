@@ -3,10 +3,10 @@ import 'package:fgame/fgame-main.dart';
 
 class CharacterGenerator {
   final FGame game;
-  final int maxSpawnInterval = 3000;
+  final int maxSpawnInterval = 1500;
   final int minSpawnInterval = 250;
   final int intervalChange = 3;
-  final int maxFliesOnScreen = 7;
+  final int maxFliesOnScreen = 15;
   late int currentInterval;
   late int nextSpawn;
 
@@ -39,6 +39,10 @@ class CharacterGenerator {
         currentInterval -= (currentInterval * .02).toInt();
       }
       nextSpawn = nowTimeStamp + currentInterval;
+    }
+    if (currentInterval <= 500) {
+      killAll();
+      start();
     }
   }
 }

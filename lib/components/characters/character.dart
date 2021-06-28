@@ -1,14 +1,14 @@
 import 'dart:ui';
 import 'package:fgame/fgame-main.dart';
-import 'package:flame/components/component.dart';
+import 'package:flame/sprite.dart';
 
 class Character {
   final FGame game;
   late Rect flyRect;
   late bool isDead = false;
   late bool isOffScreen = false;
-  late List<SpriteComponent> flyingSprite;
-  late SpriteComponent deadSprite;
+  late List<Sprite> flyingSprite;
+  late Sprite deadSprite;
   late double spriteIndex = 0;
   late Offset targetLocation;
 
@@ -19,19 +19,16 @@ class Character {
   }
 
   void setTargetLocation() {
-    double x = game.rnd.nextDouble() *
-        (game.screenSize.width - (game.tileSize * 2.025));
+    double x = 0;
     double y = (game.screenSize.height - (game.tileSize * 1.50));
     targetLocation = Offset(x, y);
   }
 
   void render(Canvas c) {
     if (isDead) {
-      deadSprite.sprite.renderRect(c, flyRect.inflate(2));
+      deadSprite.renderRect(c, flyRect.inflate(2));
     } else {
-      flyingSprite[spriteIndex.toInt()]
-          .sprite
-          .renderRect(c, flyRect.inflate(2));
+      flyingSprite[spriteIndex.toInt()].renderRect(c, flyRect);
     }
   }
 
@@ -57,6 +54,9 @@ class Character {
     } else {
       flyRect = flyRect.shift(toTarget);
       setTargetLocation();
+    }
+    if (flyRect.left <= 0) {
+      isDead = true;
     }
   }
 
